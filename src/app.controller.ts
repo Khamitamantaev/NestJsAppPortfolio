@@ -9,7 +9,12 @@ export class AppController {
 
   @Post('createcity/:city')
   createCity(@Param() params): void {
-    console.log(`You create a city with name: ${params.city}`);
+    var uri = `mongodb://127.0.0.1:27017/${params.city}`;
+    const conn = mongoose.createConnection(uri);
+    const SightModel = conn.model('Sight', Sight);
+    const sight = new SightModel( { name: "Best", description: "My name is Khamit", architect: "Khamit" });
+    sight.save();
+    console.log('db has been created!')
   }
 
   @Get()
@@ -21,18 +26,12 @@ export class AppController {
   findOne(@Param() params): string {
     console.log(params.cityname);
     var uri = `mongodb://127.0.0.1:27017/${params.cityname}`;
-
-    mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true });
     const conn = mongoose.createConnection(uri);
-
     const SightModel = conn.model('Sight', Sight);
-
     var sights = SightModel.find({}, (err, allSights) => {
       if (err) console.error(err);
-
       console.log(allSights);
     });
-
     return sights;
   }
 }
