@@ -6,6 +6,7 @@ var Sight = require('./sight.chema');
 import { AuthGuard } from '@nestjs/passport';
 import { LocalAuthGuard } from './auth/local-auth.guard';
 import { AuthService } from './auth/auth.service';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService,
@@ -18,13 +19,19 @@ export class AppController {
     return this.authService.login(req.user);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  getProfile(@Request() req) {
+    return req.user;
+  }
+
   // @UseGuards(LocalAuthGuard)
   // @Post('auth/login')
   // async login(@Request() req) {
   //   return req.user;
   // }
 
-
+  @UseGuards(JwtAuthGuard)
   @Post('createcity/:city')
   createCity(@Param() params): void {
     var uri = `mongodb://127.0.0.1:27017/${params.city}`;
@@ -39,7 +46,8 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
-
+  
+  @UseGuards(JwtAuthGuard)
   @Get(':cityname/sights')
   findOne(@Param() params): string {
     console.log(params.cityname);
