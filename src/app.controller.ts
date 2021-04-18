@@ -1,11 +1,16 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 var mongoose = require('mongoose');
-var Sight = require('./sight.chema')
+var Sight = require('./sight.chema');
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
+
+  @Post('createcity/:city')
+  createCity(@Param() params): void {
+    console.log(`You create a city with name: ${params.city}`);
+  }
 
   @Get()
   getHello(): string {
@@ -20,10 +25,9 @@ export class AppController {
     mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true });
     const conn = mongoose.createConnection(uri);
 
-    const SightModel = conn.model('Sight', Sight )
-    
-  
-   var sights =  SightModel.find({}, (err, allSights) => {
+    const SightModel = conn.model('Sight', Sight);
+
+    var sights = SightModel.find({}, (err, allSights) => {
       if (err) console.error(err);
 
       console.log(allSights);
