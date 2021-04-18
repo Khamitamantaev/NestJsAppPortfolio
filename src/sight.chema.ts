@@ -6,6 +6,6 @@ var sightSchema = new Schema({
    description :String,
    architect :String,
 });
-module.exports = mongoose.model('sight', sightSchema);
+module.exports = sightSchema
 
 

@@ -18,10 +18,12 @@ export class AppController {
     var uri = `mongodb://127.0.0.1:27017/${params.cityname}`;
 
     mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true });
-    // mongoose.createConnection(uri)
+    const conn = mongoose.createConnection(uri);
+
+    const SightModel = conn.model('Sight', Sight )
     
   
-   var sights =  Sight.find({}, (err, allSights) => {
+   var sights =  SightModel.find({}, (err, allSights) => {
       if (err) console.error(err);
 
       console.log(allSights);
