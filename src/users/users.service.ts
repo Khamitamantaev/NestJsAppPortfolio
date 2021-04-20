@@ -4,7 +4,6 @@ import { User } from './interfaces/user.interface';
 
 // This should be a real class/interface representing a user entity
 
-
 @Injectable()
 export class UsersService {
   private readonly users = [
@@ -12,13 +11,19 @@ export class UsersService {
       userId: 1,
       username: 'john',
       password: 'changeme',
-      roles: ['admin']
+      roles: [Role.Admin],
     },
     {
       userId: 2,
       username: 'maria',
       password: 'guess',
-      roles: ['moderator']
+      roles: [Role.Moderator],
+    },
+    {
+      userId: 3,
+      username: 'Khamit',
+      password: '1234',
+      roles: [Role.Regular, Role.Admin],
     },
   ];
 
@@ -26,11 +31,11 @@ export class UsersService {
     this.users.push(user);
   }
 
-  findAll(){
-    return this.users
+  findAll() {
+    return this.users;
   }
 
   async findOne(username: string): Promise<User | undefined> {
-    return this.users.find(user => user.username === username);
+    return this.users.find((user) => user.username === username);
   }
 }

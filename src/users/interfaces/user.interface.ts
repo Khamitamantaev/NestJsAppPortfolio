@@ -4,5 +4,5 @@ export interface User {
   readonly userId: number;
   readonly username: string;
   readonly password: string;
-  readonly roles: string[];
+  readonly roles: Role[];
 }
