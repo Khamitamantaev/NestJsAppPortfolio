@@ -45,8 +45,8 @@ export class AppController {
   
   @UseGuards(JwtAuthGuard)
   @Get(':cityname/sights')
-  findOne(@Param() params): string {
-    console.log(params.cityname);
+  findOne(@Param() params): void {
+    this.appService.getSights(params.cityname)
     // var uri = `mongodb://127.0.0.1:27017/${params.cityname}`;
     // const conn = mongoose.createConnection(uri);
     // const SightModel = conn.model('Sight', Sight);
@@ -54,6 +54,6 @@ export class AppController {
     //   if (err) console.error(err);
     //   console.log(allSights);
     // });
-    return "sights"
+    // return sights;
   }
 }
