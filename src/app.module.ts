@@ -8,7 +8,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './roles.guard';
 
 @Module({
-  imports: [AuthModule, UsersModule],
+  imports: [AuthModule, UsersModule,MongooseModule.forRoot('mongodb://127.0.0.1:27017/admin')],
   controllers: [AppController],
   providers: [AppService],
 })

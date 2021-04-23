@@ -1,12 +1,13 @@
 import { Controller, Get, Param, Post ,Request, UseGuards } from '@nestjs/common';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),autoIncrement = require('mongoose-auto-increment');
 var Sight = require('./sight.chema');
 import { AuthGuard } from '@nestjs/passport';
 import { LocalAuthGuard } from './auth/local-auth.guard';
 import { AuthService } from './auth/auth.service';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
+
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService,
@@ -34,12 +35,7 @@ export class AppController {
   @UseGuards(JwtAuthGuard)
   @Post('createcity/:city')
   createCity(@Param() params): void {
-    var uri = `mongodb://127.0.0.1:27017/${params.city}`;
-    const conn = mongoose.createConnection(uri);
-    const SightModel = conn.model('Sight', Sight);
-    const sight = new SightModel( { name: "Best", description: "My name is Khamit", architect: "Khamit" });
-    sight.save();
-    console.log('db has been created!')
+    this.appService.createCity(params.city)
   }
 
   @Get()
@@ -51,13 +47,13 @@ export class AppController {
   @Get(':cityname/sights')
   findOne(@Param() params): string {
     console.log(params.cityname);
-    var uri = `mongodb://127.0.0.1:27017/${params.cityname}`;
-    const conn = mongoose.createConnection(uri);
-    const SightModel = conn.model('Sight', Sight);
-    var sights = SightModel.find({}, (err, allSights) => {
-      if (err) console.error(err);
-      console.log(allSights);
-    });
-    return sights;
+    // var uri = `mongodb://127.0.0.1:27017/${params.cityname}`;
+    // const conn = mongoose.createConnection(uri);
+    // const SightModel = conn.model('Sight', Sight);
+    // var sights = SightModel.find({}, (err, allSights) => {
+    //   if (err) console.error(err);
+    //   console.log(allSights);
+    // });
+    return "sights"
   }
 }
