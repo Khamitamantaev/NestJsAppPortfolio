@@ -19,7 +19,7 @@ export class AppService {
     console.log('db has been created!')
   }
 
-  getSights(city): void {
+  getSights(city): typeof Sight {
 
     var conn2 = this.connection.useDb(city)
     const SightModel = conn2.model('Sight', Sight);
@@ -27,7 +27,7 @@ export class AppService {
       if (err) console.error(err);
       console.log(allSights);
     });
-   console.log(sights)
+   return sights
   }
 
 
